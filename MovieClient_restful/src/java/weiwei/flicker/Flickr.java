@@ -31,7 +31,7 @@ public class Flickr {
     private final DocumentBuilder xmlParser;
     
     //number of matched pictures you want to returned
-    private static final long NUMBER_OF_PICTURES_RETURNED = 3;
+    private static final long NUMBER_OF_PICTURES_RETURNED = 20;
 
     /* URL format string that specifies a single "medium" sized photo on
      * the Flickr server.  Based on the URL syntax documented here:

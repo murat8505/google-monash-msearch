@@ -40,7 +40,8 @@
             </div>
 
             <div class="alert alert-danger" role="alert">
-                <p><strong>Sorry,</strong> your request item is not found in the local database. However, the Flickr and Youtube is available for you.</p>                          
+                <p><strong>Sorry,</strong> your request item is not found in the local database. However, the Flickr and Youtube is available for you.
+                <a href="addmovie.html"><button class="btn btn-info">Add this moive!</button></a></p>
             </div>
 
             <div class="panel panel-success">
@@ -58,13 +59,13 @@
                         
                     <div class="btn-group btn-group-right">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default"><a href="https://www.flickr.com/search/?q=${mtitle}" target="_Blank">Search ${mtitle}</a></button>
+                            <a href="https://www.flickr.com/search/?q=${mtitle}" target="_Blank"><button type="button" class="btn btn-default">Search ${mtitle}</button></a>
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default"><a href="https://www.flickr.com/search/?q=${mdirector}" target="_Blank">Search ${mdirector}</a></button>
+                            <a href="https://www.flickr.com/search/?q=${mdirector}" target="_Blank"><button type="button" class="btn btn-default">Search ${mdirector}</button></a>
                         </div>
                         <div class="btn-group">
-                            <button type="button" class="btn btn-info"><a href="https://www.flickr.com/search/?q=${mtitle}+${mdirector}" target="_Blank">Search others</a></button>
+                            <a href="https://www.flickr.com/search/?q=${mtitle}+${mdirector}" target="_Blank"><button type="button" class="btn btn-info">Search others</button></a>
                         </div>
                       </div>
                    

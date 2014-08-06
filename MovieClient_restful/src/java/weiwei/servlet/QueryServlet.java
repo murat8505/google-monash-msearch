@@ -18,7 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.json.JSONObject;
 import weiwei.client.NewJerseyClient;
+import weiwei.entity.GoogleSearchResult;
+import weiwei.entity.YoutubeVideo;
 import weiwei.flicker.Flickr;
+import weiwei.google.SearchGoogle;
 import weiwei.google.SearchYoutube;
 
 /**
@@ -48,7 +51,6 @@ public class QueryServlet extends HttpServlet {
         NewJerseyClient movieClient = new NewJerseyClient();
         JSONObject jo = JSONObject.fromObject(movieClient.find_JSON(String.class, movieName));
         return jo;
-
     }
 
     private void query(HttpServletRequest request, HttpServletResponse response) {
@@ -66,7 +68,9 @@ public class QueryServlet extends HttpServlet {
             String message = "NOT FOUND";
             
             List<String> flickrImgList = this.queryFlickr(movieName);
-            List<String> youtubeVideoIdList = this.queryYoutube(movieName);
+            List<YoutubeVideo> youtubeVideoIdList = this.queryYoutube(movieName);
+            
+            
             
             request.setAttribute("mtitle", movieName);
             request.setAttribute("message", message);
@@ -86,7 +90,8 @@ public class QueryServlet extends HttpServlet {
             String mcoverpath = jo.getString("coverpath");
 
             List<String> flickrImgList = this.queryFlickr(movieName + " " + mdirector);
-            List<String> youtubeVideoIdList = this.queryYoutube(movieName + " " + mdirector);
+            List<YoutubeVideo> youtubeVideoIdList = this.queryYoutube(movieName + " " + "trailer");  
+            List<GoogleSearchResult> googleList = this.queryGoogle(movieName);
 
             request.setAttribute("mtitle", mtitle);
             request.setAttribute("mtype", mtype);
@@ -98,6 +103,7 @@ public class QueryServlet extends HttpServlet {
 
             request.setAttribute("flickrimglist", flickrImgList);
             request.setAttribute("youtubeVideoIdList", youtubeVideoIdList);
+            request.setAttribute("googleList", googleList);
             
             newPage = "/detail.jsp";
         }
@@ -109,6 +115,10 @@ public class QueryServlet extends HttpServlet {
         }
 
     }
+    
+    private List<GoogleSearchResult> queryGoogle(String keyword){       
+        return  SearchGoogle.getInstance().search(keyword);
+    }
 
     private List<String> queryFlickr(String keyword) {
         List<URL> imgList = Flickr.getInstance().search(keyword + " movie");
@@ -119,9 +129,9 @@ public class QueryServlet extends HttpServlet {
         return list;
     }
 
-    private List<String> queryYoutube(String keyword) {
-        List<String> idList = SearchYoutube.getInstance().searchFromYoutube(keyword);
-        return idList;
+    private List<YoutubeVideo> queryYoutube(String keyword) {
+        List<YoutubeVideo> videoList = SearchYoutube.getInstance().searchFromYoutube(keyword);
+        return videoList;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

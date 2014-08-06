@@ -63,7 +63,7 @@ public class Search {
         // Read the developer key from the properties file.
         Properties properties = new Properties();
         try {
-            InputStream in = Search.class.getResourceAsStream("/weiwei.google/" + PROPERTIES_FILENAME);
+            InputStream in = Search.class.getResourceAsStream("/weiwei/google/" + PROPERTIES_FILENAME);
             properties.load(in);
 
         } catch (IOException e) {

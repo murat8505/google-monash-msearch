@@ -12,11 +12,13 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.ResourceId;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
+import com.google.api.services.youtube.model.Thumbnail;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import weiwei.entity.YoutubeVideo;
 
 /**
  *
@@ -30,7 +32,7 @@ public class SearchYoutube {
      */
     private static final String PROPERTIES_FILENAME = "youtube.properties";
 
-    private static final long NUMBER_OF_VIDEOS_RETURNED = 2;
+    private static final long NUMBER_OF_VIDEOS_RETURNED = 3;
 
     /**
      * Define a global instance of a Youtube object, which will be used to make
@@ -51,7 +53,7 @@ public class SearchYoutube {
         return theInstance;
     }
 
-    public List<String> searchFromYoutube(String keyword) {
+    public List<YoutubeVideo> searchFromYoutube(String keyword) {
         // Read the developer key from the properties file.
         Properties properties = new Properties();
         try {
@@ -93,7 +95,7 @@ public class SearchYoutube {
 
             // To increase efficiency, only retrieve the fields that the
             // application uses.
-            search.setFields("items(id/kind,id/videoId,snippet/title,snippet/thumbnails/default/url)");
+            search.setFields("items(id/kind,id/videoId,snippet/title,snippet/description,snippet/thumbnails/default/url)");
             search.setMaxResults(NUMBER_OF_VIDEOS_RETURNED);
 
             // Call the API and print results.
@@ -101,11 +103,22 @@ public class SearchYoutube {
             List<SearchResult> searchResultList = searchResponse.getItems();
             if (searchResultList != null) {
                 //prettyPrint(searchResultList.iterator(), queryTerm);
-                List<String> videoIdList = new ArrayList<>();
+                List<YoutubeVideo> videoIdList = new ArrayList<>();
                 for (SearchResult singleVideo : searchResultList) {
                     ResourceId rId = singleVideo.getId();
-                    String videoId = rId.getVideoId();
-                    videoIdList.add(videoId);
+                    
+
+                    if (rId.getKind().equals("youtube#video")) {
+                        YoutubeVideo video = new YoutubeVideo();
+                        Thumbnail thumbnail = singleVideo.getSnippet().getThumbnails().getDefault();
+                        video.setVideoNum(rId.getVideoId());
+                        video.setVideoTitle(singleVideo.getSnippet().getTitle());
+                        video.setDescription(singleVideo.getSnippet().getDescription());
+                        video.setThumbnail(thumbnail.getUrl());
+                        
+                        videoIdList.add(video);
+                    }
+                    
                 }
 
                 return videoIdList;
