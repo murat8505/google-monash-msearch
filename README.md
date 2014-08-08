@@ -8,7 +8,7 @@ MSearch: A personalised movie search engine
 - Home: <wwsun.github.com>
 
 ###Project Introduction
-MSearch is a personalized search engine which integrate with server real world web services. Clients send their requests to the MSearch server, and then the requests will be handled. Based on different request types, requests will make MSearch Server consumes different web services. For example, Alice want to get some relevant images about her favorite movie Inception, he could use the MSearch Image Search service, after type the keywords, the query will be sent to the MSearch server, and then sent to Flickr for requesting the relevant images, that is to say, the actual work is done on the servers in Flickr. The home page of MSearch is shown in Figure 1.
+MSearch is a personalized search engine which integrate with several real world web services. Clients send their requests to the MSearch server, and then the requests will be handled. Based on different request types, requests will make MSearch Server consumes different web services. For example, Alice want to get some relevant images about her favorite movie Inception, he could use the MSearch Image Search service, after type the keywords, the query will be sent to the MSearch server, and then sent to Flickr for requesting the relevant images, that is to say, the actual work is done on the servers in Flickr. The home page of MSearch is shown in Figure 1.
 
 ![MSearch Homepage](/img/homepage.png "Figure 1: MSearch homepage")
 
